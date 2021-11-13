@@ -30,7 +30,8 @@ public class File {
                 fileContent.append(sc.nextLine());
                 nbLigne++;
             }
-            TexteOriginal texteOriginal = new TexteOriginal(fileContent.toString(), nbLigne);
+            TexteOriginal texteOriginal =
+                    new TexteOriginal(fileContent.toString(),nom, nbLigne);
             optional =  Optional.of(texteOriginal);
             sc.close();
         } catch (FileNotFoundException e) {

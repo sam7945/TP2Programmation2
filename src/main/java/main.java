@@ -4,14 +4,17 @@ import java.util.Optional;
 public class main {
     public static void main(String[] args) {
         Optional<TexteOriginal> optional = File.readFile();
-        HashMap<String,String> hiraganas = Tableaux.hiraganas;
-        HashMap<String,String> kataganas = Tableaux.kataganas;
-        
+        HashMap<String, String> hiraganas = Tableaux.hiraganas;
+        HashMap<String, String> kataganas = Tableaux.kataganas;
+
         if (optional.isEmpty()) {
             System.out.println("Not found!");
-        }
-        else{
+        } else {
             TexteOriginal texteOriginal = optional.get();
+            Convertisseur convertisseur = new Convertisseur(texteOriginal);
+            String codesRetour =  convertisseur.conversionCode(texteOriginal);
         }
     }
+
+
 }

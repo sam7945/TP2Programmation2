@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Tableaux {
@@ -37,5 +38,23 @@ public class Tableaux {
         put("Ba","12496");put("Bi","12499");put("Bu","12502");put("Be","12505");put("Bo","12508");
         put("Pa","12497");put("Pi","12500");put("Pu","12503");put("Pe","12506");put("Po","12509");
         put("N'","12531");
+    }};
+
+    public static ArrayList<Character> voyelleMin = new ArrayList<>(){{
+        add('a');add('e');add('i');add('o');add('u');
+    }};
+    public static ArrayList<Character> consonneMin = new ArrayList<>(){{
+        add('b');add('c');add('d');add('f');add('g');add('h');add('j');add('k');
+        add('l');add('m');add('n');add('p');add('q');add('r');add('s');add('t');
+        add('v');add('w');add('x');add('y');add('z');
+    }};
+
+    public static ArrayList<Character> voyelleMaj = new ArrayList<>(){{
+        add('A');add('E');add('I');add('O');add('U');
+    }};
+    public static ArrayList<Character> consonneMaj = new ArrayList<>(){{
+        add('B');add('C');add('D');add('F');add('G');add('H');add('J');add('K');
+        add('L');add('M');add('N');add('P');add('Q');add('R');add('S');add('T');
+        add('V');add('W');add('X');add('Y');add('Z');
     }};
 }
