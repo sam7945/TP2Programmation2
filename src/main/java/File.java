@@ -1,4 +1,6 @@
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -22,12 +24,12 @@ public class File {
         Optional<TexteOriginal> optional = Optional.empty();
 
         try {
-            Path path = FileSystems.getDefault().getPath(nom);
+            Path path = FileSystems.getDefault().getPath(nom+".txt");
             Scanner sc = new Scanner(Files.newBufferedReader(path));
             int nbLigne = 0;
             sc.useLocale(Locale.CANADA);
             while(sc.hasNext()){
-                fileContent.append(sc.nextLine());
+                fileContent.append(sc.nextLine() + '\n');
                 nbLigne++;
             }
             TexteOriginal texteOriginal =
@@ -43,6 +45,14 @@ public class File {
         return optional;
     }
 
+    public static void writeFile(String texte,String nomFichier) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(nomFichier+
+                ".html"));
+        writer.write(texte);
+
+        writer.close();
+    }
+
     /**
      * Demande à l'utilisateur d'entrer le nom d'un fichier à l'écran.
      *
@@ -51,7 +61,8 @@ public class File {
     private static String demanderNomFichier() {
         String nom;
 
-        System.out.println("Veuillez entrer le nom de votre fichier :");
+        System.out.println("Veuillez entrer le nom de votre fichier texte " +
+                "sans mettre l'extension \".txt\":");
         Scanner clavier = new Scanner(System.in);
         nom = clavier.nextLine();
         clavier.close();

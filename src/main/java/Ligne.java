@@ -8,4 +8,12 @@ public class Ligne {
         this.position = position;
         this.codes = codes;
     }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public ArrayList<String> getCodes() {
+        return codes;
+    }
 }

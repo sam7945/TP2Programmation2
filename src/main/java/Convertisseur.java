@@ -17,29 +17,51 @@ public class Convertisseur {
 
         for (Character c : texteOriginal.texteString.toCharArray()) {
             syllabeTemp += c;
-            if (Tableaux.voyelleMin.contains(c) || Tableaux.voyelleMaj.contains(c)) {
-                if (syllabeTemp.length() > 2 && (syllabeTemp.charAt(1) == 'y' || syllabeTemp.charAt(1) == 'Y'))
-                    convMultiple(codes, syllabeTemp);
-                else
-                    codes.add(convSyllabe(syllabeTemp));
-            } else if (c == '\n') {
+            if (c == '\n') {
                 lignes.add(new Ligne(ligneActuelle, codes));
                 ligneActuelle++;
                 codes = new ArrayList<>();
+                syllabeTemp = "";
+            }
+            else if(c == ' ')
+                syllabeTemp = "";
+            else if (Tableaux.voyelleMin.contains(c) || Tableaux.voyelleMaj.contains(c) ) {
+                if (syllabeTemp.length() > 2 && (syllabeTemp.charAt(1) == 'y' || syllabeTemp.charAt(1) == 'Y')) {
+                    convMultiple(codes, syllabeTemp);
+                    syllabeTemp = "";
+                } else {
+                    codes.add(convSyllabe(syllabeTemp));
+                    syllabeTemp = "";
+                }
             }
         }
-        retour = textToHtml(lignes);
-
+        retour = debutHtml();
+        retour += textToHtml(lignes);
+        retour += finHtml();
 
         return retour;
     }
 
-    private String textToHtml(ArrayList<Ligne> lignesCodes){
-        
+    private String textToHtml(ArrayList<Ligne> lignesCodes) {
+        String texteHtml = "";
+        int nbLigne = lignesCodes.stream().map(i -> i.getCodes().size()).max(Integer::compareTo).get();
+        int nbColonne = lignesCodes.size();
+
+        for(int i = 0; i < nbLigne; i++){
+            texteHtml += "<tr>";
+            for(int y = nbColonne-1;y >= 0; y--){
+                if(lignesCodes.get(y).getCodes().size() <= i)
+                    texteHtml += "<td></td>";
+                else
+                    texteHtml += "<td>" + lignesCodes.get(y).getCodes().get(i) + "</td>";
+            }
+            texteHtml += "</tr>";
+        }
+        return texteHtml;
     }
 
     private void convMultiple(ArrayList<String> codes,
-                                           String syllabe) {
+                              String syllabe) {
         String str1 = syllabe.substring(0, 1);
         String str2 = syllabe.substring(1);
         str1 += 'i';
@@ -56,9 +78,9 @@ public class Convertisseur {
     }
 
     private String convSyllabe(String syllabe) {
-        if (Tableaux.consonneMaj.contains(syllabe.charAt(0)))
+        if (Tableaux.consonneMaj.contains(syllabe.charAt(0)) || Tableaux.voyelleMaj.contains(syllabe.charAt(0)))
             return convMaj(syllabe);
-        else if (Tableaux.consonneMin.contains(syllabe.charAt(0)))
+        else if (Tableaux.consonneMin.contains(syllabe.charAt(0)) || Tableaux.voyelleMin.contains(syllabe.charAt(0)) )
             return convMin(syllabe);
         return "?";
 
@@ -67,12 +89,12 @@ public class Convertisseur {
 
     private String convMin(String syllabe) {
         syllabe = syllabe.toLowerCase();
-        return Tableaux.hiraganas.get(syllabe);
+        return "&#" + Tableaux.hiraganas.get(syllabe) + ";";
     }
 
     private String convMaj(String syllabe) {
         syllabe = syllabe.substring(0, 1).toUpperCase() + syllabe.substring(1);
-        return Tableaux.kataganas.get(syllabe);
+        return "&#" + Tableaux.kataganas.get(syllabe) + ";";
     }
 
     private String debutHtml() {
