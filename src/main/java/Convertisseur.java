@@ -25,7 +25,7 @@ public class Convertisseur {
             }
             else if(c == ' ')
                 syllabeTemp = "";
-            else if (Tableaux.voyelleMin.contains(c) || Tableaux.voyelleMaj.contains(c) ) {
+            else if (Tableaux.voyelleMin.contains(c) || Tableaux.voyelleMaj.contains(c) || c == '\'') {
                 if (syllabeTemp.length() > 2 && (syllabeTemp.charAt(1) == 'y' || syllabeTemp.charAt(1) == 'Y')) {
                     convMultiple(codes, syllabeTemp);
                     syllabeTemp = "";
