@@ -112,9 +112,7 @@ public class Convertisseur {
             str1 = str1.toLowerCase();
             str2 = str2.toLowerCase();
         }
-        codes.add(convSyllabe(str1));
-        codes.add(convSyllabe(str2));
-
+        codes.add(convSyllabe(str1)+convSyllabe(str2));
     }
 
     /**
@@ -154,7 +152,8 @@ public class Convertisseur {
      * @return Retourne l'unicode HTML correspondant à la syllabe.
      */
     private String convMaj(String syllabe) {
-        syllabe = syllabe.substring(0, 1).toUpperCase() + syllabe.substring(1);
+        syllabe = syllabe.substring(0, 1).toUpperCase() + syllabe.substring(1)
+                .toLowerCase();
         return "&#" + Tableaux.kataganas.get(syllabe) + ";";
     }
 
